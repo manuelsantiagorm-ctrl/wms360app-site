@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Seguridad | WMS360</title>
+
+    <meta
+        name="description"
+        content="Conoce las medidas de seguridad, aislamiento multiempresa, control de acceso, auditoría y protección de integraciones implementadas en WMS360."
+    >
+
+    <meta name="robots" content="index, follow">
+
+    <meta property="og:title" content="Seguridad | WMS360">
+    <meta
+        property="og:description"
+        content="Principios y medidas de seguridad aplicadas por WMS360 para proteger información empresarial, usuarios e integraciones."
+    >
+    <meta property="og:type" content="website">
+    <meta
+        property="og:url"
+        content="https://wms360app.com/seguridad/"
+    >
+
+    <link
+        rel="canonical"
+        href="https://wms360app.com/seguridad/"
+    >
+
+    <style>
+        :root {
+            --bg: #061126;
+            --bg-soft: #0b1830;
+            --card: #101f39;
+            --border: rgba(148, 163, 184, 0.18);
+            --text: #f8fafc;
+            --muted: #a9b8d3;
+            --cyan: #22d3ee;
+            --blue: #60a5fa;
+            --violet: #7c5cff;
+            --green: #34d399;
+            --yellow: #fbbf24;
+            --red: #fb7185;
+            --max: 1180px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family:
+                Inter,
+                ui-sans-serif,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+            background:
+                radial-gradient(
+                    circle at 15% 10%,
+                    rgba(34, 211, 238, 0.11),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 85% 15%,
+                    rgba(124, 92, 255, 0.14),
+                    transparent 32%
+                ),
+                var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        a {
+            color: var(--cyan);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            border-bottom: 1px solid var(--border);
+            background: rgba(6, 17, 38, 0.94);
+            backdrop-filter: blur(18px);
+        }
+
+        .header-inner {
+            max-width: var(--max);
+            margin: 0 auto;
+            min-height: 78px;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            color: white;
+            font-weight: 900;
+            letter-spacing: 0.02em;
+            font-size: 22px;
+            text-decoration: none;
+        }
+
+        .brand:hover {
+            text-decoration: none;
+        }
+
+        .brand-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 13px;
+            display: grid;
+            place-items: center;
+            background:
+                linear-gradient(
+                    135deg,
+                    #22d3ee,
+                    #60a5fa 55%,
+                    #7c5cff
+                );
+            color: white;
+            font-weight: 950;
+            box-shadow: 0 12px 34px rgba(34, 211, 238, 0.17);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 22px;
+        }
+
+        .nav a {
+            color: #bec9dc;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .nav a.active {
+            color: white;
+        }
+
+        .hero {
+            max-width: var(--max);
+            margin: 0 auto;
+            padding: 88px 24px 42px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            padding: 8px 13px;
+            border-radius: 999px;
+            border: 1px solid rgba(52, 211, 153, 0.28);
+            background: rgba(52, 211, 153, 0.08);
+            color: var(--green);
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            max-width: 950px;
+            margin: 22px 0 18px;
+            font-size: clamp(42px, 6vw, 72px);
+            line-height: 0.98;
+            letter-spacing: -0.045em;
+        }
+
+        .hero p {
+            max-width: 900px;
+            color: var(--muted);
+            font-size: 18px;
+        }
+
+        .updated {
+            margin-top: 22px;
+            color: #7f91b0;
+            font-size: 13px;
+        }
+
+        .security-summary {
+            max-width: var(--max);
+            margin: 0 auto;
+            padding: 0 24px 28px;
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .summary-card {
+            padding: 20px;
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            background: rgba(11, 24, 48, 0.78);
+        }
+
+        .summary-card span {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--green);
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .summary-card strong {
+            display: block;
+            font-size: 16px;
+        }
+
+        .summary-card p {
+            margin-bottom: 0;
+            color: #8799b8;
+            font-size: 12px;
+        }
+
+        .layout {
+            max-width: var(--max);
+            margin: 0 auto;
+            padding: 20px 24px 90px;
+            display: grid;
+            grid-template-columns: 270px minmax(0, 1fr);
+            gap: 34px;
+            align-items: start;
+        }
+
+        .toc {
+            position: sticky;
+            top: 102px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: rgba(11, 24, 48, 0.82);
+        }
+
+        .toc strong {
+            display: block;
+            margin-bottom: 12px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .toc a {
+            display: block;
+            padding: 7px 0;
+            color: #91a4c3;
+            font-size: 12px;
+        }
+
+        .content {
+            min-width: 0;
+        }
+
+        .security-section {
+            margin-bottom: 18px;
+            padding: 30px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(16, 31, 57, 0.94),
+                    rgba(9, 23, 45, 0.94)
+                );
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
+        }
+
+        .security-section h2 {
+            margin: 0 0 14px;
+            font-size: 23px;
+            letter-spacing: -0.02em;
+        }
+
+        .security-section h3 {
+            margin: 24px 0 8px;
+            font-size: 16px;
+        }
+
+        .security-section p,
+        .security-section li {
+            color: #b8c5da;
+            font-size: 15px;
+        }
+
+        .security-section ul {
+            padding-left: 22px;
+        }
+
+        .security-section li + li {
+            margin-top: 7px;
+        }
+
+        .highlight {
+            margin-top: 18px;
+            padding: 18px;
+            border: 1px solid rgba(34, 211, 238, 0.22);
+            border-radius: 14px;
+            background: rgba(34, 211, 238, 0.06);
+            color: #d8f8ff;
+        }
+
+        .success {
+            margin-top: 18px;
+            padding: 18px;
+            border: 1px solid rgba(52, 211, 153, 0.25);
+            border-radius: 14px;
+            background: rgba(52, 211, 153, 0.06);
+            color: #a7f3d0;
+        }
+
+        .warning {
+            margin-top: 18px;
+            padding: 18px;
+            border: 1px solid rgba(251, 191, 36, 0.25);
+            border-radius: 14px;
+            background: rgba(251, 191, 36, 0.06);
+            color: #fde68a;
+        }
+
+        .security-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .security-item {
+            padding: 18px;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.025);
+        }
+
+        .security-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .security-item p {
+            margin: 0;
+            color: #91a4c3;
+            font-size: 12px;
+        }
+
+        .footer {
+            border-top: 1px solid var(--border);
+            background: #051022;
+        }
+
+        .footer-inner {
+            max-width: var(--max);
+            margin: 0 auto;
+            padding: 40px 24px;
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .footer p,
+        .footer a {
+            color: #8495b2;
+            font-size: 13px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 900px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .toc {
+                position: static;
+            }
+
+            .nav {
+                display: none;
+            }
+
+            .hero {
+                padding-top: 62px;
+            }
+
+            .security-summary {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 600px) {
+            .header-inner,
+            .hero,
+            .layout,
+            .security-summary,
+            .footer-inner {
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+
+            .security-section {
+                padding: 22px;
+            }
+
+            .security-grid,
+            .security-summary {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="site-header">
+    <div class="header-inner">
+
+        <a class="brand" href="/">
+            <span class="brand-icon">W</span>
+            <span>WMS360</span>
+        </a>
+
+        <nav class="nav" aria-label="Navegación legal">
+            <a href="/">Inicio</a>
+            <a href="/privacidad/">Privacidad</a>
+            <a href="/terminos/">Términos</a>
+            <a href="/data-deletion/">Eliminación de datos</a>
+            <a class="active" href="/seguridad/">Seguridad</a>
+            <a href="/contacto/">Contacto</a>
+        </nav>
+
+    </div>
+</header>
+
+
+<main>
+
+    <section class="hero">
+
+        <span class="eyebrow">
+            Trust Center · WMS360
+        </span>
+
+        <h1>
+            Seguridad de la plataforma
+        </h1>
+
+        <p>
+            La seguridad de la información empresarial forma
+            parte del diseño de WMS360. Aplicamos controles
+            destinados a proteger usuarios, empresas, bodegas,
+            operaciones e integraciones utilizadas dentro de
+            la plataforma.
+        </p>
+
+        <p class="updated">
+            Última actualización: 7 de agosto de 2026.
+        </p>
+
+    </section>
+
+
+    <section class="security-summary">
+
+        <div class="summary-card">
+            <span>Aislamiento</span>
+            <strong>Multiempresa</strong>
+            <p>
+                Los recursos operativos se relacionan con la
+                empresa autorizada.
+            </p>
+        </div>
+
+        <div class="summary-card">
+            <span>Acceso</span>
+            <strong>Permisos y bodegas</strong>
+            <p>
+                Los usuarios reciben acceso conforme a su
+                autorización.
+            </p>
+        </div>
+
+        <div class="summary-card">
+            <span>Integraciones</span>
+            <strong>Credenciales protegidas</strong>
+            <p>
+                Los secretos de proveedores no deben exponerse
+                a usuarios no autorizados.
+            </p>
+        </div>
+
+        <div class="summary-card">
+            <span>Trazabilidad</span>
+            <strong>Auditoría</strong>
+            <p>
+                Operaciones sensibles pueden generar evidencia
+                y registros de actividad.
+            </p>
+        </div>
+
+    </section>
+
+
+    <div class="layout">
+
+        <aside class="toc">
+
+            <strong>Contenido</strong>
+
+            <a href="#principios">1. Principios</a>
+            <a href="#multiempresa">2. Aislamiento</a>
+            <a href="#autorizacion">3. Autorización</a>
+            <a href="#credenciales">4. Credenciales</a>
+            <a href="#meta">5. Meta y WhatsApp</a>
+            <a href="#datos">6. Protección de datos</a>
+            <a href="#auditoria">7. Auditoría</a>
+            <a href="#integridad">8. Integridad operativa</a>
+            <a href="#disponibilidad">9. Disponibilidad</a>
+            <a href="#terceros">10. Terceros</a>
+            <a href="#usuarios">11. Responsabilidad</a>
+            <a href="#incidentes">12. Incidentes</a>
+            <a href="#contacto">13. Contacto</a>
+
+        </aside>
+
+
+        <article class="content">
+
+            <section
+                id="principios"
+                class="security-section"
+            >
+
+                <h2>1. Principios de seguridad</h2>
+
+                <p>
+                    WMS360 diseña y opera sus funcionalidades
+                    procurando mantener la confidencialidad,
+                    integridad, disponibilidad y trazabilidad
+                    de la información administrada mediante
+                    la plataforma.
+                </p>
+
+                <div class="security-grid">
+
+                    <div class="security-item">
+                        <strong>Confidencialidad</strong>
+                        <p>
+                            La información debe estar disponible
+                            únicamente para usuarios y procesos
+                            autorizados.
+                        </p>
+                    </div>
+
+                    <div class="security-item">
+                        <strong>Integridad</strong>
+                        <p>
+                            Se aplican controles destinados a
+                            prevenir modificaciones incoherentes
+                            o no autorizadas.
+                        </p>
+                    </div>
+
+                    <div class="security-item">
+                        <strong>Disponibilidad</strong>
+                        <p>
+                            La arquitectura procura mantener
+                            servicios empresariales operativos
+                            y recuperables.
+                        </p>
+                    </div>
+
+                    <div class="security-item">
+                        <strong>Trazabilidad</strong>
+                        <p>
+                            Las operaciones relevantes pueden
+                            conservar registros para auditoría
+                            y seguridad.
+                        </p>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section
+                id="multiempresa"
+                class="security-section"
+            >
+
+                <h2>
+                    2. Aislamiento entre empresas
+                </h2>
+
+                <p>
+                    WMS360 está diseñado como una plataforma
+                    SaaS multiempresa.
+                </p>
+
+                <p>
+                    Las operaciones empresariales deben
+                    identificar el contexto de la organización
+                    autorizada antes de consultar o modificar
+                    información.
+                </p>
+
+                <p>
+                    Los controles de la plataforma están
+                    orientados a impedir que una empresa pueda
+                    consultar o modificar información
+                    perteneciente a otra organización.
+                </p>
+
+                <div class="success">
+                    El aislamiento de información entre clientes
+                    constituye un principio fundamental de
+                    seguridad de WMS360.
+                </div>
+
+            </section>
+
+
+            <section
+                id="autorizacion"
+                class="security-section"
+            >
+
+                <h2>
+                    3. Autenticación, permisos y bodegas
+                </h2>
+
+                <p>
+                    La disponibilidad de una función puede
+                    depender de múltiples factores de
+                    autorización.
+                </p>
+
+                <p>
+                    Dependiendo del módulo, WMS360 puede
+                    considerar:
+                </p>
+
+                <ul>
+                    <li>Usuario autenticado.</li>
+                    <li>Empresa asociada.</li>
+                    <li>Estado del usuario o empleado.</li>
+                    <li>Suscripción habilitada.</li>
+                    <li>Rol o capacidad asignada.</li>
+                    <li>Nivel de autorización requerido.</li>
+                    <li>Bodega autorizada.</li>
+                    <li>
+                        Pertenencia del recurso solicitado a
+                        la empresa correspondiente.
+                    </li>
+                </ul>
+
+                <p>
+                    La selección visual de una bodega o empresa
+                    en el navegador no sustituye las
+                    comprobaciones realizadas por el servidor.
+                </p>
+
+            </section>
+
+
+            <section
+                id="credenciales"
+                class="security-section"
+            >
+
+                <h2>
+                    4. Secretos y credenciales
+                </h2>
+
+                <p>
+                    WMS360 puede utilizar credenciales para
+                    comunicarse con proveedores externos.
+                </p>
+
+                <p>
+                    Entre ellas pueden existir:
+                </p>
+
+                <ul>
+                    <li>Tokens de acceso.</li>
+                    <li>API keys.</li>
+                    <li>Secretos de aplicaciones.</li>
+                    <li>Credenciales de webhooks.</li>
+                    <li>
+                        Identificadores y configuraciones de
+                        integraciones.
+                    </li>
+                </ul>
+
+                <p>
+                    Estas credenciales no deben exponerse
+                    públicamente ni incorporarse a interfaces
+                    destinadas a usuarios no autorizados.
+                </p>
+
+                <p>
+                    Cuando corresponde, WMS360 aplica mecanismos
+                    de protección y almacenamiento separado de
+                    credenciales sensibles.
+                </p>
+
+            </section>
+
+
+            <section
+                id="meta"
+                class="security-section"
+            >
+
+                <h2>
+                    5. Seguridad en Meta y WhatsApp
+                </h2>
+
+                <p>
+                    Las integraciones de WMS360 con Meta y
+                    WhatsApp Business Platform utilizan los
+                    mecanismos de autorización y APIs oficiales
+                    disponibles para dichas plataformas.
+                </p>
+
+                <p>
+                    Cuando una empresa conecta su cuenta de
+                    WhatsApp Business, WMS360 procura:
+                </p>
+
+                <ul>
+                    <li>
+                        Asociar los activos autorizados con la
+                        empresa correspondiente.
+                    </li>
+
+                    <li>
+                        Validar el número o identificador
+                        técnico recibido.
+                    </li>
+
+                    <li>
+                        No depender de valores de empresa
+                        proporcionados directamente por el
+                        navegador para determinar el propietario
+                        de información sensible.
+                    </li>
+
+                    <li>
+                        Proteger las credenciales obtenidas
+                        mediante el proceso de autorización.
+                    </li>
+
+                    <li>
+                        Procesar webhooks conforme al canal
+                        identificado.
+                    </li>
+
+                    <li>
+                        Aplicar controles contra activaciones o
+                        aprovisionamientos duplicados cuando
+                        corresponda.
+                    </li>
+                </ul>
+
+                <div class="highlight">
+                    WMS360 no solicita que clientes publiquen
+                    sus tokens o secretos en interfaces
+                    abiertas.
+                </div>
+
+            </section>
+
+
+            <section
+                id="datos"
+                class="security-section"
+            >
+
+                <h2>
+                    6. Protección de información
+                </h2>
+
+                <p>
+                    Dependiendo de la infraestructura y función,
+                    WMS360 puede utilizar mecanismos como:
+                </p>
+
+                <ul>
+                    <li>Conexiones HTTPS.</li>
+                    <li>
+                        Controles de sesión y autenticación.
+                    </li>
+                    <li>
+                        Autorización a nivel de aplicación.
+                    </li>
+                    <li>
+                        Restricciones por empresa y recurso.
+                    </li>
+                    <li>
+                        Protección de archivos y credenciales.
+                    </li>
+                    <li>Validación de datos de entrada.</li>
+                    <li>
+                        Controles contra operaciones repetidas
+                        cuando sean críticas.
+                    </li>
+                    <li>
+                        Validaciones de integridad en base de
+                        datos cuando resulten apropiadas.
+                    </li>
+                </ul>
+
+                <p>
+                    Los datos personales se tratan además de
+                    conformidad con el Aviso de Privacidad.
+                </p>
+
+                <div class="highlight">
+                    <a href="/privacidad/">
+                        https://wms360app.com/privacidad/
+                    </a>
+                </div>
+
+            </section>
+
+
+            <section
+                id="auditoria"
+                class="security-section"
+            >
+
+                <h2>
+                    7. Auditoría y trazabilidad
+                </h2>
+
+                <p>
+                    Determinadas operaciones relevantes pueden
+                    generar registros destinados a conocer:
+                </p>
+
+                <ul>
+                    <li>Qué operación fue ejecutada.</li>
+                    <li>Cuándo ocurrió.</li>
+                    <li>Qué recurso fue afectado.</li>
+                    <li>
+                        Qué usuario o proceso estuvo relacionado.
+                    </li>
+                    <li>
+                        Qué resultado produjo la operación.
+                    </li>
+                </ul>
+
+                <p>
+                    Los registros de auditoría ayudan a
+                    investigar incidencias, detectar
+                    irregularidades y mantener trazabilidad
+                    operativa.
+                </p>
+
+            </section>
+
+
+            <section
+                id="integridad"
+                class="security-section"
+            >
+
+                <h2>
+                    8. Integridad de operaciones críticas
+                </h2>
+
+                <p>
+                    Algunas acciones empresariales requieren
+                    controles adicionales debido a su impacto
+                    sobre inventario, dinero, pedidos,
+                    comunicaciones o servicios externos.
+                </p>
+
+                <p>
+                    Según corresponda, WMS360 puede aplicar:
+                </p>
+
+                <ul>
+                    <li>Transacciones de base de datos.</li>
+                    <li>Validaciones de estado.</li>
+                    <li>Restricciones de unicidad.</li>
+                    <li>Idempotencia.</li>
+                    <li>
+                        Controles destinados a reducir efectos
+                        de doble clic o reintentos.
+                    </li>
+                    <li>
+                        Verificación de pertenencia del recurso
+                        antes de modificarlo.
+                    </li>
+                    <li>
+                        Conciliación cuando una operación externa
+                        tenga un resultado incierto.
+                    </li>
+                </ul>
+
+                <div class="warning">
+                    Ninguna operación potencialmente cobrable
+                    debe repetirse deliberadamente cuando exista
+                    incertidumbre razonable sobre si el proveedor
+                    externo ya la procesó.
+                </div>
+
+            </section>
+
+
+            <section
+                id="disponibilidad"
+                class="security-section"
+            >
+
+                <h2>
+                    9. Disponibilidad y continuidad
+                </h2>
+
+                <p>
+                    WMS360 procura reducir el riesgo de pérdida
+                    de información y mantener la continuidad
+                    del servicio mediante prácticas técnicas y
+                    operativas adecuadas al componente.
+                </p>
+
+                <p>
+                    Entre ellas pueden incluirse:
+                </p>
+
+                <ul>
+                    <li>Respaldos.</li>
+                    <li>Monitoreo.</li>
+                    <li>Registros operativos.</li>
+                    <li>Mantenimiento preventivo.</li>
+                    <li>Procedimientos de recuperación.</li>
+                    <li>
+                        Actualizaciones de seguridad y
+                        estabilidad.
+                    </li>
+                </ul>
+
+                <p>
+                    Sin embargo, ningún servicio conectado a
+                    Internet puede garantizar disponibilidad
+                    absoluta o ausencia total de incidentes.
+                </p>
+
+            </section>
+
+
+            <section
+                id="terceros"
+                class="security-section"
+            >
+
+                <h2>
+                    10. Seguridad de proveedores externos
+                </h2>
+
+                <p>
+                    Algunas funciones de WMS360 dependen de
+                    plataformas o proveedores externos.
+                </p>
+
+                <p>
+                    Esto puede incluir:
+                </p>
+
+                <ul>
+                    <li>Meta y WhatsApp Business Platform.</li>
+                    <li>Procesadores de pagos.</li>
+                    <li>Paqueterías y agregadores logísticos.</li>
+                    <li>Servicios de correo.</li>
+                    <li>Infraestructura tecnológica.</li>
+                    <li>
+                        Servicios de inteligencia artificial.
+                    </li>
+                </ul>
+
+                <p>
+                    WMS360 procura integrar dichos servicios
+                    mediante sus mecanismos oficiales y
+                    limitar el acceso a la información necesaria
+                    para ofrecer las funciones correspondientes.
+                </p>
+
+                <p>
+                    Cada proveedor conserva responsabilidad
+                    sobre la seguridad de la infraestructura
+                    que controla directamente.
+                </p>
+
+            </section>
+
+
+            <section
+                id="usuarios"
+                class="security-section"
+            >
+
+                <h2>
+                    11. Responsabilidad de usuarios y clientes
+                </h2>
+
+                <p>
+                    La seguridad también depende de las prácticas
+                    de las personas que utilizan la plataforma.
+                </p>
+
+                <p>
+                    Recomendamos:
+                </p>
+
+                <ul>
+                    <li>
+                        Utilizar contraseñas seguras y únicas.
+                    </li>
+
+                    <li>
+                        No compartir cuentas entre personas.
+                    </li>
+
+                    <li>
+                        Desactivar usuarios que ya no deban tener
+                        acceso.
+                    </li>
+
+                    <li>
+                        Revisar periódicamente permisos.
+                    </li>
+
+                    <li>
+                        Proteger físicamente computadoras y
+                        dispositivos.
+                    </li>
+
+                    <li>
+                        No publicar tokens, API keys o
+                        credenciales.
+                    </li>
+
+                    <li>
+                        Reportar comportamientos sospechosos.
+                    </li>
+                </ul>
+
+            </section>
+
+
+            <section
+                id="incidentes"
+                class="security-section"
+            >
+
+                <h2>
+                    12. Reporte de incidentes
+                </h2>
+
+                <p>
+                    Si un usuario considera que existe un
+                    problema de seguridad relacionado con
+                    WMS360, debe comunicarlo mediante nuestros
+                    canales oficiales.
+                </p>
+
+                <p>
+                    El reporte debería incluir, cuando sea
+                    seguro hacerlo:
+                </p>
+
+                <ul>
+                    <li>Descripción del problema.</li>
+                    <li>Fecha aproximada.</li>
+                    <li>Módulo afectado.</li>
+                    <li>
+                        Pasos para reproducir el comportamiento,
+                        si son conocidos.
+                    </li>
+                </ul>
+
+                <div class="warning">
+                    No incluyas contraseñas, tokens, API keys,
+                    secretos ni credenciales sensibles en un
+                    reporte enviado por canales no seguros.
+                </div>
+
+            </section>
+
+
+            <section
+                id="contacto"
+                class="security-section"
+            >
+
+                <h2>
+                    13. Contacto de seguridad
+                </h2>
+
+                <p>
+                    Para asuntos relacionados con seguridad,
+                    privacidad o protección de información,
+                    utiliza los medios oficiales de WMS360.
+                </p>
+
+                <div class="highlight">
+                    Centro de Contacto:
+                    <br>
+                    <a href="/contacto/">
+                        https://wms360app.com/contacto/
+                    </a>
+                </div>
+
+                <p>
+                    También puedes consultar:
+                </p>
+
+                <p>
+                    <a href="/privacidad/">
+                        Aviso de Privacidad
+                    </a>
+                    ·
+                    <a href="/data-deletion/">
+                        Eliminación de datos
+                    </a>
+                    ·
+                    <a href="/terminos/">
+                        Términos y Condiciones
+                    </a>
+                </p>
+
+            </section>
+
+
+            <section class="security-section">
+
+                <h2>
+                    Mejora continua
+                </h2>
+
+                <p>
+                    La seguridad es un proceso continuo.
+                    WMS360 puede actualizar controles,
+                    infraestructura y procedimientos conforme
+                    evolucione la plataforma, sus integraciones
+                    y los riesgos tecnológicos.
+                </p>
+
+                <div class="success">
+                    La protección de la información de las
+                    empresas clientes constituye una prioridad
+                    operativa de WMS360.
+                </div>
+
+            </section>
+
+        </article>
+
+    </div>
+
+</main>
+
+
+<footer class="footer">
+
+    <div class="footer-inner">
+
+        <div>
+            <strong>WMS360</strong>
+            <p>
+                Plataforma SaaS de gestión empresarial.
+            </p>
+        </div>
+
+        <div class="footer-links">
+            <a href="/privacidad/">Privacidad</a>
+            <a href="/terminos/">Términos</a>
+            <a href="/cookies/">Cookies</a>
+            <a href="/data-deletion/">Eliminación de datos</a>
+            <a href="/seguridad/">Seguridad</a>
+            <a href="/contacto/">Contacto</a>
+        </div>
+
+    </div>
+
+</footer>
+
+</body>
+</html>
