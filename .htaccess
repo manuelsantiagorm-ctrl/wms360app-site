@@ -1,0 +1,4 @@
+Options -Indexes
+<FilesMatch "^(config\..*\.php|privado\.php|LEEME\.md)$">
+    Require all denied
+</FilesMatch>
