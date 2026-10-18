@@ -13,8 +13,7 @@ grant select on public.invitation_responses to authenticated;
 drop policy if exists invitation_submit on public.invitation_responses;
 create policy invitation_submit on public.invitation_responses for insert to anon, authenticated with check (true);
 drop policy if exists invitation_admin_read on public.invitation_responses;
--- Reemplazar el UUID de ceros por el ID de TU usuario de Authentication > Users.
--- Hasta reemplazarlo, ninguna cuenta puede consultar las respuestas.
+-- Solo la cuenta del dueño puede consultar las respuestas.
 create policy invitation_admin_read on public.invitation_responses for select to authenticated
-using ((select auth.uid()) = '00000000-0000-0000-0000-000000000000'::uuid);
+using ((select auth.uid()) = 'f49ced05-8037-4d15-a675-8f472d4985ab'::uuid);
 commit;
