@@ -1,15 +1,18 @@
-# Invitación en Hostinger
+﻿# Invitación con GitHub Pages y Supabase
 
-Requiere hosting con PHP 8.1 o superior y almacenamiento persistente. No funciona como una página estática en GitHub Pages. GitHub guarda el código; Hostinger ejecuta PHP y guarda las respuestas.
+GitHub Pages muestra la invitación y admin.html; Supabase guarda comida/hora y autentica al dueño. No requiere PHP.
 
-1. Sube el contenido de esta carpeta a `public_html` (o a una subcarpeta del dominio), con PHP habilitado y HTTPS activo.
-2. Genera un hash de tu contraseña en una terminal con PHP: `php -r 'echo password_hash(readline("Contraseña: "), PASSWORD_DEFAULT), PHP_EOL;'`. No uses un generador de contraseñas de terceros.
-3. Copia `config.example.php` a `config.local.php` en el servidor y coloca el hash generado en `admin_hash`. El archivo local y los datos están excluidos de Git.
-4. Comparte la dirección de `index.html`. Para consultar respuestas entra a `admin.php` en la misma carpeta y escribe tu contraseña.
-5. Prueba con una respuesta antes de compartir. Confirma que aparezca en el panel. No se solicita una fecha: la hora corresponde al día que acuerden por separado.
+## Activar
 
-Las respuestas se guardan en `datos/respuestas.php` con bloqueo para escrituras concurrentes. PHP impide que ese archivo entregue los datos directamente. No despliegues esta carpeta en un servidor que sirva archivos PHP como texto. Conserva `datos/` y `config.local.php` al actualizar desde GitHub; configura el despliegue sin borrar esos archivos. Inclúyelos en las copias de seguridad privadas del hosting.
+1. Crea un proyecto en Supabase.
+2. En Authentication > Users crea tu usuario con correo y contraseña y copia su UUID. Es una cuenta distinta de tu acceso al dashboard de Supabase.
+3. En supabase.sql reemplaza el UUID de ceros con el UUID de tu usuario y ejecuta el script en SQL Editor. Solo ese usuario puede leer; los visitantes solo insertan comida/hora.
+4. En config.js coloca la URL del proyecto y su clave pública publishable. Nunca uses secret key, service_role, contraseña ni token personal.
+5. Sube los cambios y espera el despliegue de GitHub Pages.
+6. Envía una respuesta de prueba e inicia sesión en /admin.html para verificar que aparece. Confirma también que una consulta sin sesión no pueda leer respuestas.
 
-Para probar localmente con PHP: `php -S 127.0.0.1:8080 -t invitacion` desde la raíz del proyecto. Abre `http://127.0.0.1:8080/`. Abrir el HTML como archivo permite ver el diseño y el modal, pero no guardar respuestas.
+La sesión del panel se conserva solo en memoria; al recargar debes entrar otra vez. Al vencer, cierra sesión y vuelve a entrar. Muestra las 200 respuestas más recientes. La hora elegida no incluye fecha. La fecha de recepción se muestra en hora de Ciudad de México.
 
-El panel requiere actualizar la página para ver nuevas respuestas. No envía mensajes ni notificaciones.
+Mientras config.js esté vacío, el panel muestra configuración pendiente y no se pueden guardar respuestas. No existe contraseña universal de administrador.
+
+Documentación: https://supabase.com/docs/guides/database/postgres/row-level-security

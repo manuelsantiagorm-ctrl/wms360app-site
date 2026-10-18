@@ -64,6 +64,8 @@
       <p id="send-status" role="status"></p>
     </form>
   </dialog>
+  <script src="config.js"></script>
+  <script src="api.js"></script>
   <script>
     const no = document.getElementById('no');
     const yes = document.getElementById('yes');
@@ -85,14 +87,7 @@
       submit.disabled = true;
       status.textContent = 'Guardando tu respuesta…';
       try {
-        if (location.protocol === 'file:') throw new Error('Para guardar tu respuesta, abre esta página desde el hosting.');
-        const response = await fetch('respuestas.php', {
-          method: 'POST', headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({food, time})
-        });
-        if (!response.ok) throw new Error('No se pudo guardar. Intenta de nuevo.');
-        const result = await response.json();
-        if (!result.ok) throw new Error('No se pudo guardar. Intenta de nuevo.');
+        await invitationApi.save(food, time);
         timeModal.close();
         foodResult.textContent = '¡Listo! Tu respuesta quedó guardada: ' + food + ', a las ' + time + '.';
         foodResult.hidden = false;
