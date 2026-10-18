@@ -51,6 +51,12 @@
         <button class="confirm-food" type="submit">Elegir este plan</button>
         <p id="food-result" role="status" hidden></p>
       </form>
+      <section id="thank-you" hidden tabindex="-1" aria-labelledby="thanks-title">
+        <h2 id="thanks-title">¡Gracias por decir que sí!</h2>
+        <p id="plan-summary"></p>
+        <p>La fecha la acordamos por mensaje.</p>
+        <p>¡Nos vemos pronto!</p>
+      </section>
     </section>
   </main>
   <dialog id="time-modal" aria-labelledby="time-title">
@@ -89,8 +95,12 @@
       try {
         await invitationApi.save(food, time);
         timeModal.close();
-        foodResult.textContent = '¡Listo! Tu respuesta quedó guardada: ' + food + ', a las ' + time + '.';
-        foodResult.hidden = false;
+        foodForm.hidden = true;
+        document.getElementById('happy').hidden = true;
+        document.getElementById('plan-summary').textContent = 'Tu respuesta quedó guardada: ' + food + ', a las ' + time + ' h.';
+        const thanks = document.getElementById('thank-you');
+        thanks.hidden = false;
+        thanks.focus({preventScroll:true});
       } catch (error) {
         status.textContent = error.message;
       } finally {

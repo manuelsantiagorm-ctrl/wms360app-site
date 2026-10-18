@@ -23,7 +23,11 @@ async function load() {
     document.getElementById('count').textContent = answers.length ? answers.length + ' respuesta(s) más reciente(s)' : 'Todavía no hay respuestas disponibles para esta cuenta.';
     for (const answer of answers) {
       const article = document.createElement('article');
-      for (const [label, value] of [['Comida',answer.food],['Hora elegida',answer.time.slice(0,5)],['Recibida',new Date(answer.created_at).toLocaleString('es-MX',{timeZone:'America/Mexico_City'}) + ' (Ciudad de México)']]) {
+      const received = new Date(answer.created_at).toLocaleString('es-MX', {
+        timeZone:'America/Mexico_City', day:'2-digit', month:'2-digit', year:'numeric',
+        hour:'2-digit', minute:'2-digit', second:'2-digit', hourCycle:'h23'
+      });
+      for (const [label, value] of [['Comida',answer.food],['Hora elegida para salir',answer.time.slice(0,5) + ' h'],['Fecha y hora de respuesta',received + ' (Ciudad de México)']]) {
         const row = document.createElement('p');
         const title = document.createElement('strong'); title.textContent = label + ': ';
         row.append(title,document.createTextNode(value)); article.append(row);
