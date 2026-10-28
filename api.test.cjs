@@ -39,7 +39,7 @@ test('flowers save independently and reject unsupported values', async () => {
   const api = setup(async (url, options) => {
     assert.ok(url.endsWith('/rest/v1/flower_responses'));
     assert.deepEqual(JSON.parse(options.body), {flower:'Rosas'});
-    assert.equal(options.headers.Prefer,'return:minimal'.replace(':','='));
+    assert.equal(options.headers.Prefer,'return=minimal');
     assert.equal(options.headers.Authorization,undefined);
     return {ok:true,status:204};
   });
@@ -55,7 +55,8 @@ test('five different flower drawings contain progressive strokes', () => {
   for (const svg of drawings) {
     assert.match(svg, /viewBox="0 0 480 500"/);
     assert.match(svg, /pathLength="1"/);
-    assert.ok((svg.match(/<path /g) || []).length > 20);
+    assert.match(svg, /class="trace wash"/);
+    assert.match(svg, /aria-label="Ramo de/);
     assert.doesNotMatch(svg, /NaN|undefined/);
   }
 });
