@@ -43,7 +43,6 @@ async function paint(name, session) {
     canvas.setAttribute('aria-label','Pintura de unas manos sosteniendo un ramo de ' + name.toLowerCase());
     status.textContent = 'Pintando tu ramo de ' + name.toLowerCase() + '.';
     cancelPainting=PastelPainter.start(canvas,image,{
-      reducedMotion:matchMedia('(prefers-reduced-motion: reduce)').matches,
       onComplete:() => { status.textContent = 'Tu ramo de ' + name.toLowerCase() + ' está terminado.'; }
     });
   } catch {

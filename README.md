@@ -2,7 +2,7 @@
 
 La portada solo muestra «¿Qué prefieres?» y cinco opciones. Al tocar una, se abre una vista de pintura que ocupa el viewport y la elección se envía automáticamente a Supabase. No hay botón de confirmar.
 
-Cada flor tiene su propia pintura original con manos sosteniendo el ramo y un escenario distinto. Los PNG y los prompts están en assets/. pintura.js genera capas de pinceladas en canvas, desde masas de color hasta detalle, con una duración de 7.600 ms una vez cargada la imagen. Las imágenes empiezan a precargarse al abrir la pregunta. Con movimiento reducido se muestra la obra completa.
+Cada flor tiene su propia pintura original con manos sosteniendo el ramo y un escenario distinto. Los PNG y los prompts están en assets/. pintura.js genera capas de pinceladas en canvas, desde masas de color hasta detalle, con una duración de 7.600 ms una vez cargada la imagen. Las imágenes empiezan a precargarse al abrir la pregunta. La animación se reproduce al elegir y puede repetirse o interrumpirse con los controles.
 
 ## Activar el guardado
 
