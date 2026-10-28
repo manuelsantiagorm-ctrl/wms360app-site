@@ -1,162 +1,36 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#021024">
-  <title>Una pregunta para ti</title>
-  <style>
-    *{box-sizing:border-box}body{margin:0;min-height:100svh;display:grid;place-items:center;padding:24px;background:linear-gradient(160deg,#7DA0CA 0%,#5483B3 28%,#052659 65%,#021024 100%);color:#C1E8FF;font-family:Georgia,serif;overflow-x:hidden}body:before{content:'';position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at 15% 10%,#5483B380,transparent 50%),radial-gradient(ellipse at 90% 90%,#7DA0CA60,transparent 50%)}main{position:relative;width:min(100%,560px);padding:52px 28px;text-align:center;background:#052659;border:1px solid #5483B3;border-radius:180px 180px 24px 24px;box-shadow:0 24px 80px #02102466}.eyebrow{font:11px Arial,sans-serif;letter-spacing:3px;text-transform:uppercase;color:#7DA0CA}.drawing{font-size:68px;margin:24px 0}h1{font-size:clamp(35px,7vw,52px);line-height:1.12;font-weight:normal;margin:24px 0 18px}p{font-size:18px;line-height:1.6;color:#C1E8FF}.actions{display:flex;justify-content:center;align-items:center;gap:16px;margin:32px 0 20px;min-height:52px}button{border-radius:100px;padding:17px 29px;border:1px solid #5483B3;font:16px Arial,sans-serif;cursor:pointer;touch-action:manipulation;min-height:52px}#yes{background:#C1E8FF;color:#021024;border-color:#C1E8FF;box-shadow:0 7px 18px #C1E8FF22}#yes:hover{background:#7DA0CA}#no{background:#052659;color:#C1E8FF;z-index:10;white-space:nowrap}button:focus-visible{outline:3px solid #C1E8FF;outline-offset:5px}.footnote{font:12px Arial,sans-serif;color:#7DA0CA;margin-top:30px}.hidden{display:none}#success{padding-block:12px}.badge{display:inline-block;padding:10px 18px;border:1px solid #5483B3;border-radius:30px;font:12px Arial,sans-serif;letter-spacing:1px}.petal{position:fixed;pointer-events:none;top:-40px;animation:fall 3s ease-in forwards;font-size:22px;z-index:20}@keyframes fall{to{transform:translateY(110vh) rotate(300deg);opacity:0}}@media(prefers-reduced-motion:reduce){.petal{display:none}}
-    main:has(#success:not(.hidden)){border-radius:32px;padding:38px 28px}
-    #success h1{margin-top:0;font-size:clamp(34px,7vw,46px)}
-    .food-form{margin-top:30px;text-align:left;font-family:Arial,sans-serif}
-    .food-form fieldset{padding:0;margin:0;border:0;min-width:0}
-    .food-form legend{font-size:20px;line-height:1.4;margin-bottom:20px;width:100%;text-align:center}
-    .food-option{display:flex;align-items:center;gap:14px;padding:17px 16px;margin-bottom:10px;border:1px solid #5483B3;border-radius:16px;background:#02102455;cursor:pointer;font-size:15px;line-height:1.4}
-    .food-option:has(input:checked){background:#C1E8FF;color:#021024;border-color:#C1E8FF}
-    .food-option:focus-within{outline:2px solid #C1E8FF;outline-offset:3px}
-    .food-option input{margin:0;width:19px;height:19px;flex-shrink:0;accent-color:#052659}
-    .confirm-food{margin-top:14px;width:100%;background:#C1E8FF;color:#021024;border-color:#C1E8FF}
-    #food-result{font:16px/1.5 Arial,sans-serif;text-align:center;margin-bottom:0}
-    dialog{width:min(420px,calc(100% - 32px));padding:30px;border:1px solid #5483B3;border-radius:26px;background:#052659;color:#C1E8FF;text-align:center}
-    dialog::backdrop{background:#021024cc;backdrop-filter:blur(6px)}
-    dialog h2{font-size:30px;font-weight:normal;margin:12px 0}
-    .clock{width:90px;height:90px;border:3px solid #7DA0CA;border-radius:50%;margin:0 auto 24px;position:relative}
-    .clock:before,.clock:after{content:'';position:absolute;left:42px;bottom:42px;width:3px;background:#C1E8FF;transform-origin:bottom;border-radius:3px}
-    .clock:before{height:27px;transform:rotate(45deg)}.clock:after{height:19px;transform:rotate(120deg)}
-    #time{display:block;width:100%;margin:18px 0;padding:16px;border-radius:14px;border:1px solid #5483B3;background:#021024;color:#C1E8FF;font:26px Arial,sans-serif;color-scheme:dark}
-    .cancel-time{margin-top:12px;background:transparent;color:#C1E8FF;width:100%}
-    #send-status{font:15px/1.5 Arial,sans-serif}
-  </style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#052659">
+<title>Una flor para ti</title><meta name="description" content="Elige tu flor favorita y mira cómo se dibuja un ramito para ti.">
+<link rel="stylesheet" href="flores.css?v=flowers1">
 </head>
-<body>
-  <main>
-    <section id="question">
-      <div class="eyebrow">Tengo una pregunta pendiente</div>
-      <h1>¿Se arma otro plan?</h1>
-      <p>¿Te gustaría salir conmigo nuevamente?</p>
-      <div class="actions"><button id="yes">Sí, quiero</button><button id="no">No</button></div>
-    </section>
-    <section id="success" class="hidden" aria-labelledby="happy" tabindex="-1">
-      <h1 id="happy">Sabía que dirías que sí</h1>
-      <form id="food-form" class="food-form">
-        <fieldset>
-          <legend>¿Qué quieres ir a comer?</legend>
-          <label class="food-option"><input type="radio" name="food" value="No lo sé, escoge tú" required><span>No lo sé, escoge tú</span></label>
-          <label class="food-option"><input type="radio" name="food" value="Hamburguesa de Burger King"><span>Hamburguesa de Burger King</span></label>
-          <label class="food-option"><input type="radio" name="food" value="Tacos"><span>Tacos</span></label>
-          <label class="food-option"><input type="radio" name="food" value="Birria"><span>Birria</span></label>
-          <label class="food-option"><input type="radio" name="food" value="Tacos de sal"><span>Tacos de sal</span></label>
-        </fieldset>
-        <button class="confirm-food" type="submit">Elegir este plan</button>
-        <p id="food-result" role="status" hidden></p>
-      </form>
-      <section id="thank-you" hidden tabindex="-1" aria-labelledby="thanks-title">
-        <h2 id="thanks-title">¡Gracias por decir que sí!</h2>
-        <p id="plan-summary"></p>
-        <p>La fecha la acordamos por mensaje.</p>
-        <p>¡Nos vemos pronto!</p>
-      </section>
-    </section>
-  </main>
-  <dialog id="time-modal" aria-labelledby="time-title">
-    <form id="time-form">
-      <div class="clock" aria-hidden="true"></div>
-      <h2 id="time-title">¿A qué hora nos vemos?</h2>
-      <label for="time">Elige la hora que te quede mejor</label>
-      <input id="time" name="time" type="time" required>
-      <button class="confirm-food" id="send-answer" type="submit">Confirmar comida y hora</button>
-      <button class="cancel-time" type="button" id="cancel-time">Volver</button>
-      <p id="send-status" role="status"></p>
-    </form>
-  </dialog>
-  <script src="config.js?v=bff5320"></script>
-  <script src="api.js?v=bff5320"></script>
-  <script>
-    const no = document.getElementById('no');
-    const yes = document.getElementById('yes');
-    const foodForm = document.getElementById('food-form');
-    const foodResult = document.getElementById('food-result');
-    foodForm.addEventListener('submit', event => {
-      event.preventDefault();
-      document.getElementById('send-status').textContent = '';
-      document.getElementById('time-modal').showModal();
-    });
-    const timeModal = document.getElementById('time-modal');
-    document.getElementById('cancel-time').addEventListener('click', () => timeModal.close());
-    document.getElementById('time-form').addEventListener('submit', async event => {
-      event.preventDefault();
-      const submit = document.getElementById('send-answer');
-      const status = document.getElementById('send-status');
-      const food = new FormData(foodForm).get('food');
-      const time = document.getElementById('time').value;
-      submit.disabled = true;
-      status.textContent = 'Guardando tu respuesta…';
-      try {
-        await invitationApi.save(food, time);
-        timeModal.close();
-        foodForm.hidden = true;
-        document.getElementById('happy').hidden = true;
-        document.getElementById('plan-summary').textContent = 'Tu respuesta quedó guardada: ' + food + ', a las ' + time + ' h.';
-        const thanks = document.getElementById('thank-you');
-        thanks.hidden = false;
-        thanks.focus({preventScroll:true});
-      } catch (error) {
-        status.textContent = error.message;
-      } finally {
-        submit.disabled = false;
-      }
-    });
-    foodForm.addEventListener('change', () => { foodResult.hidden = true; });
-    let escaped = false;
-    function escapeButton(event) {
-      if (event) event.preventDefault();
-      escaped = true;
-      const margin = 12;
-      const width = document.documentElement.clientWidth;
-      const height = window.innerHeight;
-      const rect = no.getBoundingClientRect();
-      const yesRect = yes.getBoundingClientRect();
-      const maxX = Math.max(margin, width - rect.width - margin);
-      const maxY = Math.max(margin, height - rect.height - margin);
-      let x = margin, y = margin;
-      for (let attempt = 0; attempt < 80; attempt++) {
-        x = margin + Math.random() * (maxX - margin);
-        y = margin + Math.random() * (maxY - margin);
-        const away = Math.hypot(x - rect.left, y - rect.top) > 90;
-        const clear = x + rect.width < yesRect.left - 12 || x > yesRect.right + 12 || y + rect.height < yesRect.top - 12 || y > yesRect.bottom + 12;
-        if (away && clear) break;
-      }
-      no.style.position = 'fixed';
-      no.style.left = x + 'px';
-      no.style.top = y + 'px';
-    }
-    no.addEventListener('pointerenter', escapeButton);
-    no.addEventListener('pointerdown', escapeButton);
-    no.addEventListener('click', escapeButton);
-    no.addEventListener('keydown', event => {
-      if (event.key === 'Enter' || event.key === ' ') escapeButton(event);
-    });
-    window.addEventListener('resize', () => { if (escaped && !no.hidden) escapeButton(); });
-    yes.addEventListener('click', () => {
-      no.hidden = true;
-      document.getElementById('question').classList.add('hidden');
-      const success = document.getElementById('success');
-      success.classList.remove('hidden');
-      success.focus({preventScroll:true});
-      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        for (let i = 0; i < 24; i++) {
-          const petal = document.createElement('span');
-          petal.className = 'petal';
-          petal.textContent = ['😊','😄','😁'][i % 3];
-          petal.setAttribute('aria-hidden', 'true');
-          petal.style.left = Math.random() * 96 + 'vw';
-          petal.style.animationDelay = Math.random() * 0.8 + 's';
-          document.body.append(petal);
-          petal.addEventListener('animationend', () => petal.remove());
-        }
-      }
-    });
-  </script>
-</body>
-</html>
+<body><main class="page">
+<header class="topline"><span>Un pequeño detalle para ti</span><span>Hecho trazo a trazo</span></header>
+<div class="shell">
+<section class="choices">
+<span class="kicker">Una pregunta, cinco flores</span>
+<h1>¿Cuál te<br>gusta más?</h1>
+<p class="intro">Elige una y mira cómo florece un pequeño dibujo para ti.</p>
+<form id="flowers-form">
+<fieldset><legend>Elige tu flor favorita</legend>
+<label class="option"><input type="radio" name="flower" value="Rosas" required><span>Rosas</span><small>01</small></label>
+<label class="option"><input type="radio" name="flower" value="Tulipanes"><span>Tulipanes</span><small>02</small></label>
+<label class="option"><input type="radio" name="flower" value="Girasoles"><span>Girasoles</span><small>03</small></label>
+<label class="option"><input type="radio" name="flower" value="Peonías"><span>Peonías</span><small>04</small></label>
+<label class="option"><input type="radio" name="flower" value="Gerberas"><span>Gerberas</span><small>05</small></label>
+</fieldset>
+<button class="primary" id="confirm-flower" disabled>Esta es mi favorita</button>
+<p class="note">Puedes verlas todas antes de elegir. Al confirmar, me compartes tu favorita.</p>
+<p class="status" id="flower-status" role="status" aria-live="polite"></p>
+</form>
+</section>
+<section class="studio" aria-label="Dibujo de tu flor">
+<div class="paper" id="drawing"><div class="placeholder"><div class="outline" aria-hidden="true">✳</div><p>Aquí está por florecer algo bonito.</p></div></div>
+<div class="art-caption"><h2 id="flower-name">Tu pequeño jardín</h2><button class="replay" id="replay" type="button" hidden>Volver a dibujar</button></div>
+<p class="art-note">Las cosas bonitas empiezan con un pequeño trazo.</p>
+</section>
+</div><footer class="footer">Un ramito que no necesita ocasión.</footer>
+</main>
+<script src="config.js?v=flowers1"></script><script src="api.js?v=flowers1"></script><script src="flores-art.js?v=flowers1"></script><script src="flores.js?v=flowers1"></script>
+</body></html>

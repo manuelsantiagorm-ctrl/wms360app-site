@@ -27,6 +27,11 @@ window.invitationApi = (() => {
     async save(food, time) {
       await request('/rest/v1/invitation_responses', {method:'POST', headers:{Prefer:'return=minimal'}, body:JSON.stringify({food, time})});
     },
+    async saveFlower(flower) {
+      if (!['Rosas','Tulipanes','Girasoles','Peonías','Gerberas'].includes(flower)) throw new Error('Selecciona una flor válida.');
+      await request('/rest/v1/flower_responses', {method:'POST', headers:{Prefer:'return=minimal'}, body:JSON.stringify({flower})});
+    },
+    async listFlowers() { return request('/rest/v1/flower_responses?select=flower,created_at&order=created_at.desc&limit=200', {}, true); },
     async login(email, password) {
       const session = await request('/auth/v1/token?grant_type=password', {method:'POST',body:JSON.stringify({email,password})});
       token = session.access_token;

@@ -35,3 +35,27 @@ test('backend failure is reported instead of confirming a save', async () => {
   const api = setup(async () => ({ok:false,status:403}));
   await assert.rejects(api.save('Birria','19:00'), /No se pudo conectar/);
 });
+test('flowers save independently and reject unsupported values', async () => {
+  const api = setup(async (url, options) => {
+    assert.ok(url.endsWith('/rest/v1/flower_responses'));
+    assert.deepEqual(JSON.parse(options.body), {flower:'Rosas'});
+    assert.equal(options.headers.Prefer,'return:minimal'.replace(':','='));
+    assert.equal(options.headers.Authorization,undefined);
+    return {ok:true,status:204};
+  });
+  await api.saveFlower('Rosas');
+  await assert.rejects(api.saveFlower('Inventada'), /flor válida/);
+});
+test('five different flower drawings contain progressive strokes', () => {
+  const context = {window:{}};
+  vm.runInNewContext(fs.readFileSync(__dirname + '/flores-art.js','utf8'), context);
+  const art = context.window.FlowerArt;
+  const drawings = art.names.map(name => art.draw(name));
+  assert.equal(new Set(drawings).size,5);
+  for (const svg of drawings) {
+    assert.match(svg, /viewBox="0 0 480 500"/);
+    assert.match(svg, /pathLength="1"/);
+    assert.ok((svg.match(/<path /g) || []).length > 20);
+    assert.doesNotMatch(svg, /NaN|undefined/);
+  }
+});

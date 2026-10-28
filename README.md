@@ -16,3 +16,11 @@ La sesión del panel se conserva solo en memoria; al recargar debes entrar otra 
 Mientras config.js esté vacío, el panel muestra configuración pendiente y no se pueden guardar respuestas. No existe contraseña universal de administrador.
 
 Documentación: https://supabase.com/docs/guides/database/postgres/row-level-security
+
+## Flores
+
+La portada ahora dibuja Rosas, Tulipanes, Girasoles, Peonías o Gerberas con SVG animado. Probar opciones no guarda respuestas: se guarda al pulsar «Esta es mi favorita». El panel admin.html reúne las flores confirmadas y las respuestas anteriores, con fecha y hora de Ciudad de México.
+
+Ejecuta flores.sql en SQL Editor del mismo proyecto para crear la tabla y los permisos. No borra respuestas anteriores. Hasta ejecutarlo, los dibujos funcionan pero no el guardado. El usuario administrador y config.js son los mismos.
+
+La invitación anterior queda en cita.html.

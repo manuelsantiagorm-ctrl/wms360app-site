@@ -3,12 +3,12 @@
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Respuestas de la invitación</title>
 <style>*{box-sizing:border-box}[hidden]{display:none!important}body{margin:0;padding:32px 20px;min-height:100svh;background:linear-gradient(145deg,#5483B3,#021024);color:#C1E8FF;font:16px/1.6 Arial,sans-serif}main{max-width:760px;margin:auto;padding:30px;background:#052659;border:1px solid #5483B3;border-radius:26px}h1{font:clamp(30px,6vw,42px) Georgia,serif}input,button{font:inherit;border:1px solid #5483B3;border-radius:12px;padding:12px}input{display:block;width:100%;margin:8px 0 20px;background:#021024;color:#C1E8FF}button{background:#C1E8FF;color:#021024;cursor:pointer}button:disabled{opacity:.6;cursor:wait}article{padding:18px;margin:18px 0;border:1px solid #5483B3;border-radius:16px}article p{margin:6px 0}small{color:#7DA0CA}.tools{display:flex;gap:12px;flex-wrap:wrap}#status{padding:14px;border:1px solid #5483B3;border-radius:12px}a{color:#C1E8FF}</style>
 </head><body><main>
-<h1>Las respuestas de tu invitación</h1>
+<h1>Sus flores y respuestas</h1>
 <p id="status" role="status" hidden></p>
 <form id="login"><label for="email">Tu correo</label><input id="email" type="email" required autocomplete="username"><label for="password">Tu contraseña</label><input id="password" type="password" required autocomplete="current-password"><button id="enter">Entrar</button></form>
 <section id="panel" hidden><div class="tools"><button id="refresh">Actualizar respuestas</button><button id="logout">Cerrar sesión</button></div><p id="count"></p><div id="answers"></div></section>
 <p><a href="index.html">Volver a la invitación</a></p>
-</main><script src="config.js?v=bff5320"></script><script src="api.js?v=bff5320"></script><script>
+</main><script src="config.js?v=flowers1"></script><script src="api.js?v=flowers1"></script><script>
 const login = document.getElementById('login');
 const panel = document.getElementById('panel');
 const status = document.getElementById('status');
@@ -19,7 +19,10 @@ async function load() {
   document.getElementById('answers').replaceChildren();
   document.getElementById('count').textContent = '';
   try {
-    const answers = await invitationApi.list();
+    const results = await Promise.allSettled([invitationApi.listFlowers(), invitationApi.list()]);
+    const answers = results.flatMap((result, index) => result.status === 'fulfilled'
+      ? result.value.map(answer => ({...answer, kind:index === 0 ? 'flower' : 'date'})) : []);
+    answers.sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
     document.getElementById('count').textContent = answers.length ? answers.length + ' respuesta(s) más reciente(s)' : 'Todavía no hay respuestas disponibles para esta cuenta.';
     for (const answer of answers) {
       const article = document.createElement('article');
@@ -27,14 +30,19 @@ async function load() {
         timeZone:'America/Mexico_City', day:'2-digit', month:'2-digit', year:'numeric',
         hour:'2-digit', minute:'2-digit', second:'2-digit', hourCycle:'h23'
       });
-      for (const [label, value] of [['Comida',answer.food],['Hora elegida para salir',answer.time.slice(0,5) + ' h'],['Fecha y hora de respuesta',received + ' (Ciudad de México)']]) {
+      const fields = answer.kind === 'flower'
+        ? [['Flor favorita',answer.flower],['Fecha y hora de elección',received + ' (Ciudad de México)']]
+        : [['Comida',answer.food],['Hora elegida para salir',answer.time.slice(0,5) + ' h'],['Fecha y hora de respuesta',received + ' (Ciudad de México)']];
+      for (const [label, value] of fields) {
         const row = document.createElement('p');
         const title = document.createElement('strong'); title.textContent = label + ': ';
         row.append(title,document.createTextNode(value)); article.append(row);
       }
       document.getElementById('answers').append(article);
     }
-    message('');
+    message(results[0].status === 'rejected'
+      ? 'No se pudieron consultar las flores. Si es la primera vez, ejecuta flores.sql en Supabase y vuelve a actualizar.'
+      : results[1].status === 'rejected' ? 'Las flores están cargadas. No se pudieron consultar las respuestas de la cita.' : '');
   } catch (error) { message(error.message); }
   finally { refresh.disabled = false; }
 }
