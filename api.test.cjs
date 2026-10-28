@@ -46,17 +46,27 @@ test('flowers save independently and reject unsupported values', async () => {
   await api.saveFlower('Rosas');
   await assert.rejects(api.saveFlower('Inventada'), /flor válida/);
 });
-test('five different flower drawings contain progressive strokes', () => {
-  const context = {window:{}};
-  vm.runInNewContext(fs.readFileSync(__dirname + '/flores-art.js','utf8'), context);
-  const art = context.window.FlowerArt;
-  const drawings = art.names.map(name => art.draw(name));
-  assert.equal(new Set(drawings).size,5);
-  for (const svg of drawings) {
-    assert.match(svg, /viewBox="0 0 480 500"/);
-    assert.match(svg, /pathLength="1"/);
-    assert.match(svg, /class="trace wash"/);
-    assert.match(svg, /aria-label="Ramo de/);
-    assert.doesNotMatch(svg, /NaN|undefined/);
-  }
+test('painting progresses through timed layers and completes within eight seconds', () => {
+  let callback, complete = false, strokeCount = 0, finalImageCount = 0;
+  const mockContext = {
+    drawImage() { finalImageCount++; },
+    getImageData() { return {data:new Uint8ClampedArray(720*1080*4)}; },
+    fill() {strokeCount++;},
+    fillRect(){},save(){},restore(){},translate(){},rotate(){},beginPath(){},moveTo(){},lineTo(){},closePath(){}
+  };
+  const canvas = {getContext:() => mockContext};
+  const context = {window:{},document:{createElement:() => ({getContext:() => mockContext})},
+    performance:{now:() => 0},requestAnimationFrame:fn => { callback=fn;return 1; },cancelAnimationFrame(){}};
+  vm.runInNewContext(fs.readFileSync(__dirname + '/pintura.js','utf8'),context);
+  const painter = context.window.PastelPainter;
+  assert.ok(painter.DURATION<=8000);
+  const marks=painter.schedule(720,1080);
+  assert.ok(marks.every((mark,i) => mark.when>=0 && mark.when<=1 && (!i || mark.when>=marks[i-1].when)));
+  painter.start(canvas,{naturalWidth:1024,naturalHeight:1536},{onComplete:() => {complete=true;}});
+  callback(3500);
+  assert.ok(strokeCount>0);
+  assert.equal(complete,false);
+  callback(painter.DURATION);
+  assert.equal(complete,true);
+  assert.ok(finalImageCount>=2);
 });

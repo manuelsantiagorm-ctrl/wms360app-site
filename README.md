@@ -1,26 +1,15 @@
-﻿# Invitación con GitHub Pages y Supabase
+# Flores pintadas y panel privado
 
-GitHub Pages muestra la invitación y admin.html; Supabase guarda comida/hora y autentica al dueño. No requiere PHP.
+La portada solo muestra «¿Qué prefieres?» y cinco opciones. Al tocar una, se abre una vista de pintura que ocupa el viewport y la elección se envía automáticamente a Supabase. No hay botón de confirmar.
 
-## Activar
+Cada flor tiene su propia pintura original con manos sosteniendo el ramo y un escenario distinto. Los PNG y los prompts están en assets/. pintura.js genera capas de pinceladas en canvas, desde masas de color hasta detalle, con una duración de 7.600 ms una vez cargada la imagen. Las imágenes empiezan a precargarse al abrir la pregunta. Con movimiento reducido se muestra la obra completa.
 
-1. Crea un proyecto en Supabase.
-2. En Authentication > Users crea tu usuario con correo y contraseña y copia su UUID. Es una cuenta distinta de tu acceso al dashboard de Supabase.
-3. En supabase.sql reemplaza el UUID de ceros con el UUID de tu usuario y ejecuta el script en SQL Editor. Solo ese usuario puede leer; los visitantes solo insertan comida/hora.
-4. En config.js coloca la URL del proyecto y su clave pública publishable. Nunca uses secret key, service_role, contraseña ni token personal.
-5. Sube los cambios y espera el despliegue de GitHub Pages.
-6. Envía una respuesta de prueba e inicia sesión en /admin.html para verificar que aparece. Confirma también que una consulta sin sesión no pueda leer respuestas.
+## Activar el guardado
 
-La sesión del panel se conserva solo en memoria; al recargar debes entrar otra vez. Al vencer, cierra sesión y vuelve a entrar. Muestra las 200 respuestas más recientes. La hora elegida no incluye fecha. La fecha de recepción se muestra en hora de Ciudad de México.
+Ejecuta flores.sql en SQL Editor del proyecto Supabase existente. Crea flower_responses y permite insertar una flor a visitantes y leer únicamente al usuario administrador configurado. No borra respuestas anteriores. Si la tabla todavía no existe, la pintura se reproduce pero aparece un aviso para reintentar el guardado.
 
-Mientras config.js esté vacío, el panel muestra configuración pendiente y no se pueden guardar respuestas. No existe contraseña universal de administrador.
+admin.html consulta flores y respuestas anteriores usando el mismo correo/contraseña de Supabase Authentication. Las fechas se muestran en horario de Ciudad de México. config.js contiene únicamente la URL y clave pública. Nunca publiques claves secretas ni contraseñas.
 
-Documentación: https://supabase.com/docs/guides/database/postgres/row-level-security
+La invitación anterior se conserva en cita.html. Las sesiones del administrador solo duran mientras la página permanece abierta. El panel muestra las 200 respuestas más recientes por tipo.
 
-## Flores
-
-La portada ahora dibuja Rosas, Tulipanes, Girasoles, Peonías o Gerberas con SVG animado. Probar opciones no guarda respuestas: se guarda al pulsar «Esta es mi favorita». El panel admin.html reúne las flores confirmadas y las respuestas anteriores, con fecha y hora de Ciudad de México.
-
-Ejecuta flores.sql en SQL Editor del mismo proyecto para crear la tabla y los permisos. No borra respuestas anteriores. Hasta ejecutarlo, los dibujos funcionan pero no el guardado. El usuario administrador y config.js son los mismos.
-
-La invitación anterior queda en cita.html.
+Verificación: node --test api.test.cjs

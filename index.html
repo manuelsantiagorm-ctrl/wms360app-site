@@ -1,36 +1,22 @@
 <!doctype html>
 <html lang="es">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#052659">
-<title>Una flor para ti</title><meta name="description" content="Elige tu flor favorita y mira cómo se dibuja un ramito para ti.">
-<link rel="stylesheet" href="flores.css?v=flowers1">
-</head>
-<body><main class="page">
-<header class="topline"><span>Un pequeño detalle para ti</span><span>Hecho trazo a trazo</span></header>
-<div class="shell">
-<section class="choices">
-<span class="kicker">Una pregunta, cinco flores</span>
-<h1>¿Cuál te<br>gusta más?</h1>
-<p class="intro">Elige una y mira cómo florece un pequeño dibujo para ti.</p>
-<form id="flowers-form">
-<fieldset><legend>Elige tu flor favorita</legend>
-<label class="option"><input type="radio" name="flower" value="Rosas" required><span>Rosas</span><small>01</small></label>
-<label class="option"><input type="radio" name="flower" value="Tulipanes"><span>Tulipanes</span><small>02</small></label>
-<label class="option"><input type="radio" name="flower" value="Girasoles"><span>Girasoles</span><small>03</small></label>
-<label class="option"><input type="radio" name="flower" value="Peonías"><span>Peonías</span><small>04</small></label>
-<label class="option"><input type="radio" name="flower" value="Gerberas"><span>Gerberas</span><small>05</small></label>
-</fieldset>
-<button class="primary" id="confirm-flower" disabled>Esta es mi favorita</button>
-<p class="note">Puedes verlas todas antes de elegir. Al confirmar, me compartes tu favorita.</p>
-<p class="status" id="flower-status" role="status" aria-live="polite"></p>
-</form>
-</section>
-<section class="studio" aria-label="Dibujo de tu flor">
-<div class="paper" id="drawing"><div class="placeholder"><div class="outline" aria-hidden="true">✳</div><p>Aquí está por florecer algo bonito.</p></div></div>
-<div class="art-caption"><h2 id="flower-name">Tu pequeño jardín</h2><button class="replay" id="replay" type="button" hidden>Volver a dibujar</button></div>
-<p class="art-note">Las cosas bonitas empiezan con un pequeño trazo.</p>
-</section>
-</div><footer class="footer">Un ramito que no necesita ocasión.</footer>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#021024"><title>¿Qué prefieres?</title><link rel="stylesheet" href="flores.css?v=pastel2"></head>
+<body>
+<main id="selection" class="selection">
+<h1>¿Qué prefieres?</h1>
+<div class="options" aria-label="Elige una flor">
+<button data-flower="Rosas">Rosas</button>
+<button data-flower="Tulipanes">Tulipanes</button>
+<button data-flower="Girasoles">Girasoles</button>
+<button data-flower="Peonías">Peonías</button>
+<button data-flower="Gerberas">Gerberas</button>
+</div>
 </main>
-<script src="config.js?v=flowers1"></script><script src="api.js?v=flowers1"></script><script src="flores-art.js?v=flowers1"></script><script src="flores.js?v=flowers1"></script>
+<section id="painting-view" class="painting-view" hidden aria-label="Pintura de tu ramo">
+<canvas id="painting" role="img" aria-label="Un ramo sostenido por unas manos se va pintando"></canvas>
+<div class="painting-controls"><button id="back" aria-label="Volver a elegir">←</button><button id="replay" aria-label="Volver a pintar">↻</button></div>
+<p id="painting-status" class="sr-only" role="status" aria-live="polite"></p>
+<div class="save-error" id="save-error" hidden><span>No se pudo guardar tu elección.</span><button id="retry">Reintentar</button></div>
+</section>
+<script src="config.js?v=pastel2"></script><script src="api.js?v=pastel2"></script><script src="pintura.js?v=pastel2"></script><script src="flores.js?v=pastel2"></script>
 </body></html>
