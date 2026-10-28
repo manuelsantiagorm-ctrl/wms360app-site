@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="es">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#021024"><title>¿Qué prefieres?</title><link rel="stylesheet" href="flores.css?v=mensajes1"></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#021024"><title>¿Qué prefieres?</title><link rel="stylesheet" href="flores.css?v=postit1"></head>
 <body>
 <main id="selection" class="selection">
 <h1>¿Qué prefieres?</h1>
@@ -14,10 +14,14 @@
 </main>
 <section id="painting-view" class="painting-view" hidden aria-label="Pintura de tu ramo">
 <canvas id="painting" role="img" aria-label="Un ramo sostenido por unas manos se va pintando"></canvas>
+<aside class="flower-note" id="flower-note" aria-label="Un dato de tu flor">
+<div class="postit"><h2>¿Sabías que…?</h2><p id="flower-fact" class="typing" aria-hidden="true"></p><p id="fact-accessible" class="sr-only"></p><a id="fact-source" target="_blank" rel="noopener noreferrer" aria-label="Consultar fuente del dato">Fuente ↗</a></div>
+<button id="return-home" type="button">Regresar al inicio</button>
+</aside>
 <h2 class="dedication" id="paint-message" hidden aria-live="polite"></h2>
 <div class="painting-controls"><button id="back" aria-label="Volver a elegir">←</button><button id="replay" aria-label="Volver a pintar">↻</button></div>
 <p id="painting-status" class="sr-only" role="status" aria-live="polite"></p>
 <div class="save-error" id="save-error" hidden><span>No se pudo guardar tu elección.</span><button id="retry">Reintentar</button></div>
 </section>
-<script src="config.js?v=mensajes1"></script><script src="api.js?v=mensajes1"></script><script src="pintura.js?v=mensajes1"></script><script src="flores.js?v=mensajes1"></script>
+<script src="config.js?v=postit1"></script><script src="api.js?v=postit1"></script><script src="pintura.js?v=postit1"></script><script src="flores.js?v=postit1"></script>
 </body></html>

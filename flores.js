@@ -11,6 +11,35 @@ const saveError = document.getElementById('save-error');
 const retry = document.getElementById('retry');
 const buttons = [...document.querySelectorAll('[data-flower]')];
 const images = new Map();
+const flowerFacts = {
+  'Rosas': {text:'Algunos rosales dan pequeños frutos llamados escaramujos. Después de sus flores, todavía tienen algo bonito que ofrecer.',source:'https://www.chicagobotanic.org/plant-information/rose-hips'},
+  'Tulipanes': {text:'No todos los tulipanes tienen forma de copa: existen variedades con pétalos rizados, con flecos y hasta parecidas a peonías.',source:'https://www.rhs.org.uk/plants/tulip'},
+  'Girasoles': {text:'Lo que parece una sola flor es un conjunto de pequeñas flores. En su centro crecen formando espirales.',source:'https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:119003-2/general-information'},
+  'Peonías': {text:'Una peonía bien cuidada puede vivir durante décadas. Algunas llegan a florecer en el mismo jardín durante casi un siglo.',source:'https://www.rhs.org.uk/press/documents/shows/chelsea/2026/reports/rhs-great-pavillion-tips-and-trends-report-2026.pdf?ext='},
+  'Gerberas': {text:'La gerbera esconde muchas flores diminutas en una sola cabeza floral. ¡Es como un pequeño ramo dentro del ramo!',source:'https://www.kew.org/read-and-watch/lets-pluck-the-daisy'}
+};
+const note = document.getElementById('flower-note');
+const factText = document.getElementById('flower-fact');
+let factWords = [], writtenWords = -1;
+function prepareNote(name) {
+  factWords = flowerFacts[name].text.split(' ');
+  writtenWords = -1;
+  factText.textContent = '';
+  factText.classList.add('typing');
+  document.getElementById('fact-accessible').textContent = flowerFacts[name].text;
+  document.getElementById('fact-source').href = flowerFacts[name].source;
+  note.classList.remove('stuck');
+  void note.offsetWidth;
+  note.classList.add('stuck');
+}
+function writeFact(elapsed) {
+  const count = Math.min(factWords.length,Math.max(0,Math.ceil((elapsed-550)/230)));
+  if(count !== writtenWords) {
+    factText.textContent = factWords.slice(0,count).join(' ');
+    writtenWords = count;
+  }
+  if(count === factWords.length) factText.classList.remove('typing');
+}
 let current = '', generation = 0, cancelPainting = () => {}, saving = false;
 function loadImage(name) {
   if (!images.has(name)) {
@@ -36,6 +65,7 @@ async function save(name, session) {
 async function paint(name, session) {
   cancelPainting();
   view.classList.remove('finished');
+  prepareNote(name);
   paintMessage.textContent = 'Espera un momento';
   paintMessage.hidden = false;
   status.textContent = 'Preparando la pintura de ' + name.toLowerCase() + '.';
@@ -48,6 +78,7 @@ async function paint(name, session) {
     status.textContent = 'Pintando tu ramo de ' + name.toLowerCase() + '.';
     cancelPainting=PastelPainter.start(canvas,image,{
       onProgress:elapsed => {
+        writeFact(elapsed);
         const message = elapsed < 2400 ? 'Espera un momento'
           : elapsed < 4700 ? 'Ya casi'
           : elapsed < 6500 ? 'Casi acabo' : 'Listo, para ti';
@@ -56,6 +87,7 @@ async function paint(name, session) {
       onComplete:() => {
         view.classList.add('finished');
         paintMessage.hidden = true;
+        writeFact(10000);
         status.textContent = 'Tu ramo de ' + name.toLowerCase() + ' está terminado. Para ti.';
       }
     });
@@ -78,6 +110,7 @@ document.getElementById('back').addEventListener('click', () => {
   generation++;cancelPainting();view.hidden=true;selection.hidden=false;saving=false;
   buttons.find(button => button.dataset.flower===current)?.focus({preventScroll:true});
 });
+document.getElementById('return-home').addEventListener('click', () => document.getElementById('back').click());
 document.getElementById('replay').addEventListener('click', () => {
   status.className='sr-only';paint(current,generation);
 });
