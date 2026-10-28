@@ -6,6 +6,7 @@ const selection = document.getElementById('selection');
 const view = document.getElementById('painting-view');
 const canvas = document.getElementById('painting');
 const status = document.getElementById('painting-status');
+const paintMessage = document.getElementById('paint-message');
 const saveError = document.getElementById('save-error');
 const retry = document.getElementById('retry');
 const buttons = [...document.querySelectorAll('[data-flower]')];
@@ -35,6 +36,8 @@ async function save(name, session) {
 async function paint(name, session) {
   cancelPainting();
   view.classList.remove('finished');
+  paintMessage.textContent = 'Espera un momento';
+  paintMessage.hidden = false;
   status.textContent = 'Preparando la pintura de ' + name.toLowerCase() + '.';
   const context=canvas.getContext('2d');context.fillStyle='#e8dfca';context.fillRect(0,0,canvas.width,canvas.height);
   try {
@@ -44,13 +47,21 @@ async function paint(name, session) {
     canvas.setAttribute('aria-label','Pintura de unas manos sosteniendo un ramo de ' + name.toLowerCase());
     status.textContent = 'Pintando tu ramo de ' + name.toLowerCase() + '.';
     cancelPainting=PastelPainter.start(canvas,image,{
+      onProgress:elapsed => {
+        const message = elapsed < 2400 ? 'Espera un momento'
+          : elapsed < 4700 ? 'Ya casi'
+          : elapsed < 6500 ? 'Casi acabo' : 'Listo, para ti';
+        if (paintMessage.textContent !== message) paintMessage.textContent = message;
+      },
       onComplete:() => {
         view.classList.add('finished');
+        paintMessage.hidden = true;
         status.textContent = 'Tu ramo de ' + name.toLowerCase() + ' está terminado. Para ti.';
       }
     });
   } catch {
     if (session === generation) {
+      paintMessage.hidden = true;
       status.classList.remove('sr-only');status.classList.add('save-error');
       status.textContent='No se pudo cargar la pintura. Pulsa ↻ para reintentar.';
     }

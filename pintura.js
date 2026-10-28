@@ -18,7 +18,7 @@ window.PastelPainter = (() => {
     }
     return strokes;
   }
-  function start(canvas, image, {onComplete = () => {}, reducedMotion = false} = {}) {
+  function start(canvas, image, {onComplete = () => {}, onProgress = () => {}, reducedMotion = false} = {}) {
     const width = 720;
     const height = Math.round(width*image.naturalHeight/image.naturalWidth);
     canvas.width = width; canvas.height = height;
@@ -62,6 +62,7 @@ window.PastelPainter = (() => {
       if (stopped) return;
       const elapsed=now-began;
       if (elapsed>=DURATION || reducedMotion) { finish();return; }
+      onProgress(elapsed);
       const progress=Math.min(1,elapsed/7000);
       while(index<strokes.length && strokes[index].when<=progress) stroke(strokes[index++]);
       // Última veladura de detalle: conserva las pinceladas de la pintura original.

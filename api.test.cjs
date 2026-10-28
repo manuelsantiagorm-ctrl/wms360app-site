@@ -52,6 +52,7 @@ test('successful empty 201 does not falsely report a failed flower save', async 
 });
 test('painting progresses through timed layers and completes within eight seconds', () => {
   let callback, complete = false, strokeCount = 0, finalImageCount = 0;
+  const progressTimes = [];
   const mockContext = {
     drawImage() { finalImageCount++; },
     getImageData() { return {data:new Uint8ClampedArray(720*1080*4)}; },
@@ -66,11 +67,13 @@ test('painting progresses through timed layers and completes within eight second
   assert.ok(painter.DURATION<=8000);
   const marks=painter.schedule(720,1080);
   assert.ok(marks.every((mark,i) => mark.when>=0 && mark.when<=1 && (!i || mark.when>=marks[i-1].when)));
-  painter.start(canvas,{naturalWidth:1024,naturalHeight:1536},{onComplete:() => {complete=true;}});
+  painter.start(canvas,{naturalWidth:1024,naturalHeight:1536},{onComplete:() => {complete=true;},onProgress:elapsed => progressTimes.push(elapsed)});
   callback(3500);
   assert.ok(strokeCount>0);
   assert.equal(complete,false);
+  assert.deepEqual(progressTimes,[3500]);
   callback(painter.DURATION);
   assert.equal(complete,true);
+  assert.deepEqual(progressTimes,[3500]);
   assert.ok(finalImageCount>=2);
 });
