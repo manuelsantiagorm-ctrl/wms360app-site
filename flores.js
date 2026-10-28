@@ -19,9 +19,17 @@ const flowerFacts = {
   'Gerberas': {text:'La gerbera esconde muchas flores diminutas en una sola cabeza floral. ¡Es como un pequeño ramo dentro del ramo!',source:'https://www.kew.org/read-and-watch/lets-pluck-the-daisy'}
 };
 const note = document.getElementById('flower-note');
+const personalNotes = {
+  'Rosas':'Estas se ven bien, pero admito que compiten con tu sonrisa.',
+  'Tulipanes':'Te las manda alguien que espera tener al menos una pequeña mención en tu mente hoy.',
+  'Girasoles':'Aviso: estas flores no se comparan contigo, pero hacían el intento.',
+  'Peonías':'Un sobornador anónimo me pidió que te entregara esto... ¿funcionará?',
+  'Gerberas':'Si te sacan una sonrisa, entonces la misión del día está cumplida.'
+};
 const factText = document.getElementById('flower-fact');
 let factWords = [], writtenWords = -1;
 function prepareNote(name) {
+  document.getElementById('flower-dedication').textContent = personalNotes[name];
   factWords = flowerFacts[name].text.split(' ');
   writtenWords = -1;
   factText.textContent = '';
