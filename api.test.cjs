@@ -46,6 +46,10 @@ test('flowers save independently and reject unsupported values', async () => {
   await api.saveFlower('Rosas');
   await assert.rejects(api.saveFlower('Inventada'), /flor válida/);
 });
+test('successful empty 201 does not falsely report a failed flower save', async () => {
+  const api = setup(async () => ({ok:true,status:201,headers:new Headers(),json:async () => {throw new SyntaxError('Unexpected end of JSON input');}}));
+  await api.saveFlower('Rosas');
+});
 test('painting progresses through timed layers and completes within eight seconds', () => {
   let callback, complete = false, strokeCount = 0, finalImageCount = 0;
   const mockContext = {

@@ -1,6 +1,6 @@
 const scenes = {
-  'Rosas':'assets/rosas.png', 'Tulipanes':'assets/tulipanes.png',
-  'Girasoles':'assets/girasoles.png', 'Peonías':'assets/peonias.png', 'Gerberas':'assets/gerberas.png'
+  'Rosas':'assets/rosas-azul.png', 'Tulipanes':'assets/tulipanes-azul.png',
+  'Girasoles':'assets/girasoles.png', 'Peonías':'assets/peonias-azul.png', 'Gerberas':'assets/gerberas-azul.png'
 };
 const selection = document.getElementById('selection');
 const view = document.getElementById('painting-view');
@@ -34,6 +34,7 @@ async function save(name, session) {
 }
 async function paint(name, session) {
   cancelPainting();
+  view.classList.remove('finished');
   status.textContent = 'Preparando la pintura de ' + name.toLowerCase() + '.';
   const context=canvas.getContext('2d');context.fillStyle='#e8dfca';context.fillRect(0,0,canvas.width,canvas.height);
   try {
@@ -43,7 +44,10 @@ async function paint(name, session) {
     canvas.setAttribute('aria-label','Pintura de unas manos sosteniendo un ramo de ' + name.toLowerCase());
     status.textContent = 'Pintando tu ramo de ' + name.toLowerCase() + '.';
     cancelPainting=PastelPainter.start(canvas,image,{
-      onComplete:() => { status.textContent = 'Tu ramo de ' + name.toLowerCase() + ' está terminado.'; }
+      onComplete:() => {
+        view.classList.add('finished');
+        status.textContent = 'Tu ramo de ' + name.toLowerCase() + ' está terminado. Para ti.';
+      }
     });
   } catch {
     if (session === generation) {

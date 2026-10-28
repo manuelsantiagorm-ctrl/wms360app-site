@@ -23,3 +23,7 @@ an abundant bouquet of pale pink and ivory PEONIES, many fluffy ruffled round pe
 ## gerberas.png
 
 a bouquet of cheerful coral, hot pink, orange GERBERA DAISIES with distinct radial petals and golden centers, wrapped in pale peach paper, held by two anatomically natural human hands with cobalt blue sleeves entering from bottom corners. Background: bright turquoise seaside with sandy path and sea grass, warm sunny day.
+
+## Versiones azules
+
+rosas-azul.png, tulipanes-azul.png, peonias-azul.png y gerberas-azul.png fueron editadas con image_gen integrado. Prompt de edición: cambiar exclusivamente los pétalos de entre un tercio y la mitad de las flores principales a tonos azul cobalto, celeste y azul aciano; conservar algunas flores del color original, especie, composición, manos, mangas, envoltorio, escenario y textura de pastel al óleo. Sin texto, marcos ni marcas de agua. Los girasoles no fueron modificados. «Para ti» se superpone como texto HTML al finalizar la animación.

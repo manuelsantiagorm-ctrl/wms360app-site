@@ -20,6 +20,9 @@ window.invitationApi = (() => {
         ? 'No se pudo completar la solicitud. Revisa los datos y la configuración.'
         : 'No se pudo conectar con las respuestas. Intenta de nuevo.');
     }
+    // PostgREST puede responder 201 sin cuerpo ni Content-Length con return=minimal.
+    // Un guardado exitoso no debe intentar leer JSON de una respuesta vacía.
+    if (options.headers?.Prefer === 'return=minimal') return null;
     return response.status === 204 || response.headers.get('content-length') === '0' ? null : response.json();
   }
   return {
