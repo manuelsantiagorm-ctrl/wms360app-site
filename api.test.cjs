@@ -52,7 +52,7 @@ test('painting progresses through timed layers and completes within eight second
     drawImage() { finalImageCount++; },
     getImageData() { return {data:new Uint8ClampedArray(720*1080*4)}; },
     fill() {strokeCount++;},
-    fillRect(){},save(){},restore(){},translate(){},rotate(){},beginPath(){},moveTo(){},lineTo(){},closePath(){}
+    fillRect(){},save(){},restore(){},translate(){},rotate(){},beginPath(){},moveTo(){},lineTo(){},quadraticCurveTo(){},closePath(){}
   };
   const canvas = {getContext:() => mockContext};
   const context = {window:{},document:{createElement:() => ({getContext:() => mockContext})},

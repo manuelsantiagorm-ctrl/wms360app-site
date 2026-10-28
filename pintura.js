@@ -46,12 +46,12 @@ window.PastelPainter = (() => {
       ctx.globalAlpha=.9;
       const length=mark.size*(1.2+brush()), thickness=mark.size*(.4+brush()*.45);
       ctx.beginPath();
-      ctx.moveTo(-length/2,-thickness*.25);
-      ctx.lineTo(-length*.25,-thickness*.52);
-      ctx.lineTo(length*.4,-thickness*.4);
-      ctx.lineTo(length*.5,thickness*.05);
-      ctx.lineTo(length*.32,thickness*.5);
-      ctx.lineTo(-length*.4,thickness*.4);
+      ctx.moveTo(-length*.48,-thickness*.16);
+      ctx.quadraticCurveTo(-length*.36,-thickness*.6,-length*.18,-thickness*.44);
+      ctx.quadraticCurveTo(length*.14,-thickness*.6,length*.42,-thickness*.28);
+      ctx.quadraticCurveTo(length*.6,0,length*.4,thickness*.28);
+      ctx.quadraticCurveTo(length*.22,thickness*.6,-length*.03,thickness*.4);
+      ctx.quadraticCurveTo(-length*.4,thickness*.6,-length*.48,-thickness*.16);
       ctx.closePath();ctx.fill();
       // Pequeños huecos y estrías aportan una textura irregular al pastel.
       ctx.globalAlpha=.25;
