@@ -27,7 +27,6 @@ function prepareNote(name) {
   factText.textContent = '';
   factText.classList.add('typing');
   document.getElementById('fact-accessible').textContent = flowerFacts[name].text;
-  document.getElementById('fact-source').href = flowerFacts[name].source;
   note.classList.remove('stuck');
   void note.offsetWidth;
   note.classList.add('stuck');
